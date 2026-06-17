@@ -104,6 +104,8 @@ descriptions, or remind yourself of everything it includes.
 
 ---
 
+CONTACT INFORMATION TO GET LICENCSE KEY.
+https://tech.jeff-network.com/
 ## In one sentence
 **An all-in-one, offline, secure management system that turns a small MikroTik / piso-WiFi
 operation into a professionally-run internet business — billing, automation, inventory,
