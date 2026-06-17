@@ -1,8 +1,8 @@
 @echo off
-title MikroTik AI Ops Panel
+title MikroTik jeffnet Panel
 cd /d "%~dp0"
 echo ============================================================
-echo   MikroTik AI Ops Panel
+echo   MikroTik jeffnet Panel
 echo ============================================================
 echo.
 
