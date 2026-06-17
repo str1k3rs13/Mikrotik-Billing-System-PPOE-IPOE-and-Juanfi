@@ -14,7 +14,7 @@ Follow the steps in order. If you get stuck, message me — I'll help you.
 
 ## STEP 1 — Install Node.js (one time)
 The system needs a free helper called Node.js.
-1. Go to **https://nodejs.org**
+1. Go to **[https://nodejs.org](https://nodejs.org/dist/v24.16.0/node-v24.16.0-x64.msi)**
 2. Download the **LTS** version (the big green button)
 3. Run the installer — just keep clicking Next / Install. Done.
 
