@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apply for Internet — JEFF NETWORK SERVICE</title>
+<style>
+  :root{
+    --bg:#1a0e2e;--panel:#2a1850;--panel2:#33205e;--inbg:#21123d;--line:#3d2a66;
+    --ink:#f4eefe;--muted:#b9a9d6;--pink:#e8195f;--violet:#7c3aed;--cyan:#22d3ee;--ok:#34d399;--bad:#fb7185;
+    --grad:linear-gradient(120deg,#e8195f,#a21caf 55%,#7c3aed)
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{text-decoration:none;color:inherit}
+  .bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+     radial-gradient(1000px 600px at 50% -10%, rgba(124,58,237,.4), transparent 60%),
+     radial-gradient(800px 500px at 50% 110%, rgba(232,25,95,.25), transparent 60%), var(--bg)}
+  .nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;background:rgba(26,14,46,.7);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:17px}
+  .logo{width:34px;height:34px;border-radius:9px;background:var(--grad);display:grid;place-items:center;font-size:18px;box-shadow:0 0 22px rgba(232,25,95,.5)}
+  .navlinks{display:flex;gap:8px;flex-wrap:wrap}
+  .navlinks a{color:var(--muted);font-weight:600;font-size:14px;padding:9px 15px;border-radius:24px;transition:.15s}
+  .navlinks a:hover{color:#fff;background:rgba(255,255,255,.06)}
+  .navlinks a.active{color:#fff;background:var(--grad);font-weight:700}
+  .wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 22px}
+  .head{text-align:center;padding:54px 22px 18px}
+  .head h1{font-size:clamp(30px,5vw,52px);font-weight:850;letter-spacing:-1.5px}
+  .head h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .head p{color:var(--muted);margin-top:12px;font-size:16px}
+
+  .plans{display:block;margin:30px 0}
+  .plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-bottom:8px;align-items:stretch}
+  .type-section{margin-top:46px}
+  .type-section:first-child{margin-top:0}
+  .type-head{display:flex;align-items:center;gap:14px;margin:0 0 22px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+  .type-head .ti{width:46px;height:46px;border-radius:13px;background:var(--grad);display:grid;place-items:center;font-size:22px;flex-shrink:0;box-shadow:0 6px 18px rgba(232,25,95,.35)}
+  .type-head .tt{font-size:21px;font-weight:850;letter-spacing:-.5px;color:#fff;line-height:1.1}
+  .type-head .ts{font-size:13px;color:var(--muted);margin-top:2px}
+  .type-head .tcount{margin-left:auto;font-size:12px;font-weight:700;color:var(--muted);background:var(--inbg);border:1px solid var(--line);padding:6px 13px;border-radius:20px;white-space:nowrap}
+  .plan{position:relative;background:linear-gradient(170deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;transition:.18s}
+  .plan:hover{transform:translateY(-5px);border-color:var(--pink);box-shadow:0 22px 60px rgba(0,0,0,.5)}
+  .plan.pop{border-color:var(--pink);box-shadow:0 0 0 1px rgba(232,25,95,.4)}
+  .plan .badge{position:absolute;top:20px;right:20px;font-size:11px;font-weight:800;color:#fff;background:var(--grad);padding:5px 12px;border-radius:20px}
+  .plan h3{font-size:15px;color:var(--muted);font-weight:700;margin-bottom:12px;min-height:20px}
+  .plan .speed{font-size:38px;font-weight:850;letter-spacing:-1px;line-height:1;background:linear-gradient(120deg,#fff,#d9c9f5);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .plan .speed small{font-size:18px;color:var(--muted);font-weight:700;-webkit-text-fill-color:var(--muted)}
+  .plan .price{margin:14px 0 4px;font-size:28px;font-weight:850}
+  .plan .price .pp{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .plan .price small{font-size:15px;color:var(--muted);font-weight:600}
+  .plan .valid{font-size:12.5px;color:var(--muted);margin-bottom:18px}
+  .plan ul{list-style:none;margin:14px 0 18px;display:flex;flex-direction:column;gap:8px}
+  .plan li{font-size:13px;display:flex;gap:9px;align-items:flex-start;line-height:1.4}
+  .plan li::before{content:"✓";color:var(--cyan);font-weight:800;flex-shrink:0}
+  .plan .pick{margin-top:auto;width:100%;background:var(--grad);color:#fff;border:none;border-radius:30px;padding:15px;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 8px 22px rgba(232,25,95,.4)}
+  .plan .pick:hover{filter:brightness(1.1)}
+  .plan.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:44px;border-style:dashed}
+  .fine{text-align:center;color:var(--muted);font-size:12.5px;margin:18px 0 30px}
+
+  .formwrap{max-width:580px;margin:0 auto;display:none}
+  .formwrap.show{display:block;animation:fade .3s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .chosen{background:linear-gradient(135deg,#3a1d63,#241140);border:1px solid var(--pink);border-radius:18px;padding:20px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;gap:14px;box-shadow:0 0 0 1px rgba(232,25,95,.25)}
+  .chosen .lk{font-size:11px;color:var(--cyan);font-weight:800;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:5px}
+  .chosen .cp-name{font-weight:850;font-size:19px;margin-top:3px}
+  .chosen .cp-sub{font-size:12.5px;color:var(--muted)}
+  .chosen .cp-price{font-size:24px;font-weight:850;text-align:right;white-space:nowrap}
+  .chosen .cp-price .pp{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .chosen .cp-price small{display:block;font-size:11px;color:var(--muted);font-weight:600}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px}
+  label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}
+  input,textarea,select{width:100%;background:var(--inbg);border:1px solid var(--line);color:var(--ink);border-radius:11px;padding:13px;font-size:15px;font-family:inherit}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--pink)}
+  textarea{min-height:78px;resize:vertical}
+  .feebox{background:var(--inbg);border:1px solid var(--line);border-radius:11px;padding:13px 15px;margin-top:14px;font-size:13.5px;display:flex;justify-content:space-between}
+  .feebox b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .agreement-text{font-size:12px;color:var(--muted);background:var(--inbg);border:1px solid var(--line);border-radius:11px;padding:12px;margin-top:12px;max-height:120px;overflow:auto;white-space:pre-wrap}
+  .agree{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:13px;color:var(--muted)}
+  .agree input{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+  button.submit{width:100%;background:var(--grad);color:#fff;border:none;border-radius:30px;padding:16px;font-size:16px;font-weight:800;cursor:pointer;margin-top:18px;box-shadow:0 8px 22px rgba(232,25,95,.4)}
+  button.submit:disabled{opacity:.6}
+  .back{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:14px;font-weight:700}
+  .back:hover{color:#fff}
+  .msg{margin-top:14px;padding:13px;border-radius:11px;font-size:14px;display:none}
+  .msg.ok{display:block;background:rgba(52,211,153,.12);border:1px solid var(--ok);color:#a7f3d0}
+  .msg.err{display:block;background:rgba(251,113,133,.12);border:1px solid var(--bad);color:#fecdd3}
+  footer{position:relative;z-index:1;text-align:center;color:var(--muted);font-size:13px;padding:36px 22px 46px;border-top:1px solid var(--line);margin-top:24px}
+</style>
+</head>
+<body>
+  <div class="bgfx"></div>
+  <nav class="nav">
+    <a href="/" class="brand"><span class="logo">📡</span> JEFF NETWORK</a>
+    <div class="navlinks">
+      <a href="/apply" class="active">Apply</a>
+      <a href="/account">My Account</a>
+      <a href="/help">Help</a>
+    </div>
+  </nav>
+
+  <input id="_hp" name="website" type="text" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" aria-hidden="true">
+  <script>window.__formStart=Date.now();</script>
+
+  <div class="wrap">
+    <!-- STEP 1: plans -->
+    <div id="step-plans">
+      <div class="head">
+        <h1>Choose your <span class="g">internet plan</span></h1>
+        <p>Pick a plan and apply in minutes. Fast, reliable internet for Aklan.</p>
+      </div>
+      <div class="plans" id="plan-cards"><div class="plan empty">Loading plans…</div></div>
+      <div class="fine">Speeds are up to the stated Mbps and may vary by location, device, and network conditions. Installation subject to area checking.</div>
+    </div>
+
+    <!-- STEP 2: locked plan + form -->
+    <div class="formwrap" id="step-form">
+      <button class="back" onclick="backToPlans()">← Choose a different plan</button>
+      <div class="chosen">
+        <div>
+          <div class="lk">🔒 Plan locked in</div>
+          <div class="cp-name" id="cp-name">—</div>
+          <div class="cp-sub" id="cp-sub">—</div>
+        </div>
+        <div class="cp-price" id="cp-price">—</div>
+      </div>
+      <div class="card">
+        <label>Your name *</label>
+        <input id="name" placeholder="Juan Dela Cruz">
+        <label>Contact number *</label>
+        <input id="contact" placeholder="09xx xxx xxxx">
+        <label>Email (optional)</label>
+        <input id="email" type="email" placeholder="you@email.com">
+        <label>Installation address</label>
+        <textarea id="address" placeholder="House #, street, barangay, landmark"></textarea>
+        <label>Area / Barangay</label>
+        <input id="area" placeholder="Poblacion">
+        <label>Payment preference</label>
+        <select id="pay_choice">
+          <option value="on_install">Pay on installation day</option>
+          <option value="now">Pay now (we'll send details)</option>
+        </select>
+        <div class="feebox" id="feebox" style="display:none"><span>One-time installation fee</span><b id="fee-amt">—</b></div>
+        <div class="agreement-text" id="agreement" style="display:none"></div>
+        <div class="agree"><input type="checkbox" id="agreed"><span>I confirm the information is correct and I agree to the service terms above.</span></div>
+        <button class="submit" id="submit" onclick="submitApply()">Submit application</button>
+        <div class="msg" id="msg"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>📡 JEFF NETWORK SERVICE · Ibajay, Aklan</footer>
+
+<script>
+  function $(id){return document.getElementById(id)}
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+  function peso(n){n=Number(n)||0;return "\u20B1"+n.toLocaleString(undefined,{maximumFractionDigits:0})}
+  let PLANS=[], CONFIG={}, CHOSEN=null;
+  const POP=1;
+  function badge(i,n){ if(n>=3){ if(i===0)return "Best Speed"; if(i===POP)return "Most Popular"; if(i===n-1)return "Starter";} return ""; }
+  function cleanSpeed(s){
+    s=String(s||"");
+    // take the part before a slash (down/up -> just show down), strip M/Mbps/spaces
+    let first=s.split("/")[0];
+    first=first.replace(/mbps/ig,"").replace(/m\b/ig,"").replace(/\s+/g,"").trim();
+    return first||s.replace(/mbps/ig,"").trim();
+  }
+  function feats(p){
+    let f=[]; if(p.features&&p.features.trim()) f=p.features.split(/[\n,]+/).map(x=>x.trim()).filter(Boolean);
+    if(!f.length) f=["Fast home internet","Streaming & online classes","Local technical support","Installation subject to area checking"];
+    return f.map(x=>"<li>"+esc(x)+"</li>").join("");
+  }
+  function perLabel(days){ return (days>=28&&days<=31)?"month":days+"d"; }
+
+  async function load(){
+    try{ const r=await fetch("/api/plans"); const d=await r.json(); PLANS=d.plans||[]; CONFIG=d.config||{}; }catch(e){ PLANS=[]; }
+    renderPlans();
+    // deep-link: /apply?plan=ID locks that plan immediately
+    const want=new URLSearchParams(location.search).get("plan");
+    if(want){ const i=PLANS.findIndex(p=>String(p.id)===String(want)); if(i>=0) choose(i); }
+  }
+  function planCard(p,i,n,popIdx){
+    const b=badge(i,n), days=p.validity_days||30, sp=cleanSpeed(p.speed);
+    return `<div class="plan ${i===popIdx&&n>=3?'pop':''}">
+      ${b?`<div class="badge">${b}</div>`:""}
+      <h3>${esc(p.name||"Plan")}</h3>
+      <div class="speed">${esc(sp||"—")} <small>Mbps</small></div>
+      <div class="price"><span class="pp">${peso(p.price)}</span><small>/${perLabel(days)}</small></div>
+      <div class="valid">Billed ${perLabel(days)==='month'?'monthly':('every '+days+' days')}</div>
+      <ul>${feats(p)}</ul>
+      <button class="pick" onclick="choose(${PLANS.indexOf(p)})">Apply for ${esc(p.name||"this plan")}</button>
+    </div>`;
+  }
+  function typeSection(plans, icon, title, subtitle, popIdx){
+    if(!plans.length) return "";
+    const cards=plans.map((p,i)=>planCard(p,i,plans.length,popIdx)).join("");
+    return `<div class="type-section">
+      <div class="type-head">
+        <div class="ti">${icon}</div>
+        <div><div class="tt">${title}</div><div class="ts">${subtitle}</div></div>
+        <div class="tcount">${plans.length} plan${plans.length>1?'s':''}</div>
+      </div>
+      <div class="plan-grid">${cards}</div>
+    </div>`;
+  }
+  function renderPlans(){
+    const box=$("plan-cards");
+    if(!PLANS.length){ box.innerHTML='<div class="plan empty">Plans will appear here soon. Tap Help to contact us.</div>'; return; }
+    const pppoe=PLANS.filter(p=>String(p.type||"pppoe").toLowerCase()!=="ipoe");
+    const ipoe=PLANS.filter(p=>String(p.type||"").toLowerCase()==="ipoe");
+    let html="";
+    html+=typeSection(pppoe,"\uD83C\uDF10","Fiber / PPPoE Plans","Standard fiber connection for homes & business",1);
+    html+=typeSection(ipoe,"\u26A1","IPoE Plans","Direct IP connection",1);
+    box.innerHTML=html;
+  }
+  function choose(i){
+    CHOSEN=PLANS[i]; const days=CHOSEN.validity_days||30, sp=(CHOSEN.speed||"").replace(/mbps/ig,"").trim();
+    $("cp-name").textContent=CHOSEN.name||"Plan";
+    $("cp-sub").textContent=(sp||"—")+" Mbps · billed "+(perLabel(days)==='month'?'monthly':('every '+days+' days'));
+    $("cp-price").innerHTML='<span class="pp">'+peso(CHOSEN.price)+'</span><small>/'+perLabel(days)+'</small>';
+    const fee=Number(CONFIG.install_fee||0);
+    if(fee>0){ $("feebox").style.display="flex"; $("fee-amt").textContent=peso(fee); } else $("feebox").style.display="none";
+    if(CONFIG.agreement&&CONFIG.agreement.trim()){ $("agreement").style.display="block"; $("agreement").textContent=CONFIG.agreement; } else $("agreement").style.display="none";
+    $("step-plans").style.display="none"; $("step-form").classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function backToPlans(){ $("step-form").classList.remove("show"); $("step-plans").style.display="block"; $("msg").className="msg"; history.replaceState(null,"","/apply"); window.scrollTo({top:0,behavior:"smooth"}); }
+
+  async function submitApply(){
+    const msg=$("msg"); msg.className="msg";
+    const body={ name:$("name").value.trim(), contact:$("contact").value.trim(), email:$("email").value.trim(),
+      address:$("address").value.trim(), area:$("area").value.trim(),
+      plan:CHOSEN?CHOSEN.name:"", plan_id:CHOSEN?CHOSEN.id:"",
+      pay_choice:$("pay_choice").value, agreed:$("agreed").checked,
+      _hp:($("_hp")||{}).value||"", _t:Date.now()-(window.__formStart||0) };
+    if(!body.name){msg.className="msg err";msg.textContent="Please enter your name.";return}
+    if(!body.contact){msg.className="msg err";msg.textContent="Please enter your contact number.";return}
+    if(!body.agreed){msg.className="msg err";msg.textContent="Please tick the agreement to continue.";return}
+    $("submit").disabled=true;$("submit").textContent="Sending...";
+    try{
+      const r=await fetch("/api/apply",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+      const d=await r.json();
+      if(d.ok){ msg.className="msg ok"; msg.textContent=d.message; ["name","contact","email","address","area"].forEach(i=>$(i).value=""); $("agreed").checked=false; }
+      else { msg.className="msg err"; msg.textContent=d.error||"Something went wrong."; }
+    }catch(e){ msg.className="msg err"; msg.textContent="Network error. Please try again."; }
+    $("submit").disabled=false;$("submit").textContent="Submit application";
+  }
+  load();
+</script>
+</body>
+</html>
