@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Account — JEFF NETWORK SERVICE</title>
+<style>
+  :root{
+    --bg:#1a0e2e;--panel:#2a1850;--panel2:#33205e;--inbg:#21123d;--line:#3d2a66;
+    --ink:#f4eefe;--muted:#b9a9d6;--pink:#e8195f;--violet:#7c3aed;--cyan:#22d3ee;--ok:#34d399;--bad:#fb7185;--warn:#fbbf24;
+    --grad:linear-gradient(120deg,#e8195f,#a21caf 55%,#7c3aed)
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{text-decoration:none;color:inherit}
+  .bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+     radial-gradient(1000px 600px at 50% -10%, rgba(124,58,237,.4), transparent 60%),
+     radial-gradient(800px 500px at 50% 110%, rgba(232,25,95,.25), transparent 60%), var(--bg)}
+  .nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;background:rgba(26,14,46,.7);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:17px}
+  .logo{width:34px;height:34px;border-radius:9px;background:var(--grad);display:grid;place-items:center;font-size:18px;box-shadow:0 0 22px rgba(232,25,95,.5)}
+  .navlinks{display:flex;gap:8px;flex-wrap:wrap}
+  .navlinks a{color:var(--muted);font-weight:600;font-size:14px;padding:9px 15px;border-radius:24px;transition:.15s}
+  .navlinks a:hover{color:#fff;background:rgba(255,255,255,.06)}
+  .navlinks a.active{color:#fff;background:var(--grad);font-weight:700}
+  .wrap{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:40px 22px}
+
+  .card{background:linear-gradient(170deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:20px;padding:26px}
+  h1{font-size:26px;font-weight:850;letter-spacing:-.5px}
+  .sub{color:var(--muted);font-size:14px;margin:6px 0 4px}
+  label{display:block;font-size:12px;font-weight:700;margin:16px 0 6px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+  input,select{width:100%;background:var(--inbg);border:1px solid var(--line);color:var(--ink);border-radius:11px;padding:14px;font-size:15px;font-family:inherit}
+  input:focus,select:focus{outline:none;border-color:var(--pink)}
+  button{cursor:pointer;font-family:inherit}
+  .btn-main{width:100%;background:var(--grad);color:#fff;border:none;border-radius:12px;padding:15px;font-size:16px;font-weight:800;margin-top:18px;box-shadow:0 8px 22px rgba(232,25,95,.4)}
+  .btn-main:disabled{opacity:.6}
+  .hint{font-size:12px;color:var(--muted);margin-top:12px}
+  .msg{margin-top:14px;padding:13px;border-radius:11px;font-size:14px;display:none}
+  .msg.err{display:block;background:rgba(251,113,133,.12);border:1px solid var(--bad);color:#fecdd3}
+  .msg.ok{display:block;background:rgba(52,211,153,.12);border:1px solid var(--ok);color:#a7f3d0}
+
+  /* subscriber card */
+  .acct{display:none}
+  .subcard{background:var(--grad);border-radius:20px;padding:24px;color:#fff;position:relative;overflow:hidden}
+  .subcard::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.12)}
+  .subcard .lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:.85;font-weight:700}
+  .subcard .who{font-size:24px;font-weight:850;margin-top:2px}
+  .subcard .code{font-size:12.5px;opacity:.8;font-family:ui-monospace,monospace;margin-top:2px}
+  .subcard .pills{display:flex;gap:8px;margin-top:14px}
+  .subcard .pill{background:rgba(255,255,255,.16);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700}
+  .statpill{position:absolute;top:24px;right:24px;background:rgba(255,255,255,.18);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:800;z-index:1}
+  .statpill.suspended{background:rgba(0,0,0,.3)}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--line);border-radius:14px;overflow:hidden;margin:16px 0}
+  .gcell{background:var(--panel);padding:14px}
+  .gcell .k{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+  .gcell .v{font-size:15px;font-weight:800;margin-top:3px}
+  .wallet{background:var(--inbg);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;margin:14px 0}
+  .wallet .wk{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+  .wallet .wv{font-size:26px;font-weight:850;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .wbtn{background:var(--grad);color:#fff;border:none;border-radius:24px;padding:10px 18px;font-size:13px;font-weight:800}
+  .actions{display:grid;gap:10px;margin-top:14px}
+  .actions .full{grid-column:1/-1}
+  .actrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .abtn{background:var(--inbg);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:14px;font-size:14px;font-weight:700;transition:.15s}
+  .abtn:hover{border-color:var(--violet)}
+  .abtn.primary{background:var(--grad);border:none;color:#fff;box-shadow:0 8px 22px rgba(232,25,95,.4)}
+  .modal{position:fixed;inset:0;z-index:90;background:rgba(10,6,20,.7);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+  .modal.show{display:flex}
+  .mbox{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;max-width:380px;width:100%;margin:auto;max-height:none}
+  .mbox h3{font-size:18px;margin-bottom:6px}
+  .mbox .x{float:right;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer}
+  .amtrow{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+  .amtrow .chip{flex:1;min-width:70px;background:var(--inbg);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px;font-weight:800;font-size:14px;text-align:center}
+  .amtrow .chip.sel{background:var(--grad);border-color:transparent;color:#fff}
+  footer{position:relative;z-index:1;text-align:center;color:var(--muted);font-size:13px;padding:30px 22px 40px}
+  /* GCash / Maya payment cards */
+  .paytabs{display:flex;gap:8px;margin:4px 0 12px}
+  .paytab{flex:1;background:var(--inbg);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px;font-weight:800;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
+  .paytab.sel.gcash{background:#0a7cff;border-color:transparent;color:#fff}
+  .paytab.sel.maya{background:#00b14f;border-color:transparent;color:#fff}
+  .paycard{background:var(--inbg);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+  .paycard .pcname{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700}
+  .paycard .pcnum{font-size:22px;font-weight:850;letter-spacing:.5px;margin:4px 0;font-family:ui-monospace,monospace}
+  .paycard .pcacct{font-size:14px;color:var(--ink);font-weight:600}
+  .paycard .pcqr{margin:14px auto 6px;width:180px;height:180px;border-radius:12px;background:#fff;padding:8px;display:block}
+  .paycard .pccopy{margin-top:10px;background:var(--grad);color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;width:auto;box-shadow:none}
+  .paycard .pchint{font-size:12px;color:var(--muted);margin-top:10px}
+</style>
+</head>
+<body>
+  <div class="bgfx"></div>
+  <nav class="nav">
+    <div class="brand" aria-label="brand"><span class="logo">📡</span> <span id="brand-name">JEFF NETWORK</span></div>
+    <div class="navlinks">
+      <a href="/apply">Apply</a>
+      <a href="/account" class="active">My Account</a>
+      <a href="/help">Help</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <!-- sign in -->
+    <div class="card" id="signin">
+      <h1>Sign in to your account</h1>
+      <div class="sub">Enter your account code OR username, plus your last name, to see your status and pay.</div>
+      <label>Account code or username</label>
+      <input id="code" placeholder="Account code or your PPPoE/IPoE username" autocomplete="off">
+      <label>Last name</label>
+      <input id="last" placeholder="Your surname" autocomplete="off">
+      <button class="btn-main" id="go" onclick="lookup()">Check my account</button>
+      <div class="msg" id="msg"></div>
+      <div class="hint">Use your account code (from your receipt) or your PPPoE/IPoE username, with the last name on your account.</div>
+    </div>
+
+    <!-- account -->
+    <div class="acct" id="acct">
+      <div class="subcard">
+        <div class="statpill" id="a-status">ACTIVE</div>
+        <div class="lbl">Subscriber</div>
+        <div class="who" id="a-name">—</div>
+        <div class="code" id="a-code">—</div>
+        <div class="pills"><span class="pill" id="a-conn">—</span><span class="pill" id="a-speed">—</span></div>
+      </div>
+
+      <div class="grid3">
+        <div class="gcell"><div class="k">Plan rate</div><div class="v" id="a-rate">—</div></div>
+        <div class="gcell"><div class="k">Due date</div><div class="v" id="a-due">—</div></div>
+        <div class="gcell"><div class="k">Status</div><div class="v" id="a-stat2">—</div></div>
+      </div>
+
+      <div class="wallet">
+        <div><div class="wk">Wallet balance</div><div class="wv" id="a-balance">₱0</div></div>
+        <button class="wbtn" onclick="openPay('topup')">Top up</button>
+      </div>
+
+      <div class="actions">
+        <button class="abtn primary full" onclick="openPay('renew')">⟳ Renew / pay plan</button>
+        <div class="actrow">
+          <button class="abtn" onclick="openPay('bill')">Pay bill</button>
+          <button class="abtn" onclick="location.href='/help'">Support ticket</button>
+        </div>
+        <button class="abtn full" onclick="signOut()">Check another account</button>
+      </div>
+      <div class="hint" id="a-updated" style="text-align:center"></div>
+    </div>
+  </div>
+
+  <!-- payment modal -->
+  <div class="modal" id="paymodal">
+    <div class="mbox">
+      <button class="x" onclick="closePay()">✕</button>
+      <h3 id="pay-title">Top up wallet</h3>
+      <div class="sub" id="pay-sub">Choose an amount, then pay online or upload your GCash/Maya receipt.</div>
+      <div class="amtrow" id="amtchips"></div>
+      <label>Amount (₱)</label>
+      <input id="pay-amount" type="number" min="20" placeholder="e.g. 1500" oninput="clearChips()">
+
+      <!-- method toggle -->
+      <div class="amtrow" style="margin-top:14px">
+        <button class="chip sel" id="m-online" onclick="setMethod('online')">💳 Pay online</button>
+        <button class="chip" id="m-manual" onclick="setMethod('manual')">📷 I already paid (upload proof)</button>
+      </div>
+
+      <!-- ONLINE (PayMongo) -->
+      <div id="pane-online">
+        <button class="btn-main" id="pay-go" onclick="startPay()">Continue to payment →</button>
+        <div class="hint">You'll be taken to a secure GCash / Maya / card checkout. Your account updates automatically once paid.</div>
+      </div>
+
+      <!-- MANUAL (paid directly via GCash/Maya, send proof) -->
+      <div id="pane-manual" style="display:none">
+        <div id="paydetails" style="margin-top:6px"></div>
+        <label>GCash / Maya reference number</label>
+        <input id="pay-ref" placeholder="e.g. 1029384756102">
+        <label>Screenshot of your payment (optional but speeds approval)</label>
+        <input id="pay-shot" type="file" accept="image/*" onchange="previewShot()">
+        <div id="shot-preview" style="margin-top:8px"></div>
+        <button class="btn-main" id="manual-go" onclick="submitManual()">Submit for approval →</button>
+        <div class="hint">We'll match your reference to the payment we received (or confirm it), then reconnect your service.</div>
+      </div>
+
+      <div class="msg" id="pay-msg"></div>
+    </div>
+  </div>
+
+  <footer><span id="foot-name">📡 JEFF NETWORK SERVICE</span> <span id="foot-addr">· Ibajay, Aklan</span><div id="foot-contact" style="margin-top:5px"></div></footer>
+
+<script>
+  function $(id){return document.getElementById(id)}
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+  function peso(n){n=Number(n)||0;return "\u20B1"+n.toLocaleString(undefined,{maximumFractionDigits:2})}
+  let ACC=null, PAY_PURPOSE="topup", PLAN_RATE=0;
+
+  async function lookup(){
+    const msg=$("msg"); msg.className="msg";
+    const code=$("code").value.trim(), last=$("last").value.trim();
+    if(!code||!last){msg.className="msg err";msg.textContent="Enter your account code or username and last name.";return}
+    $("go").disabled=true;$("go").textContent="Checking...";
+    try{
+      const r=await fetch("/api/myaccount",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code,last})});
+      const d=await r.json();
+      if(d.ok){ showAccount(d.account); }
+      else { msg.className="msg err"; msg.textContent=d.error||"Not found."; }
+    }catch(e){ msg.className="msg err"; msg.textContent="Network error. Please try again."; }
+    $("go").disabled=false;$("go").textContent="Check my account";
+  }
+  function showAccount(a){
+    ACC=a;
+    $("a-name").textContent=a.name||"—";
+    $("a-code").textContent=a.code||"—";
+    const st=(a.status||"active").toLowerCase();
+    $("a-status").textContent=(a.status||"active").toUpperCase();
+    $("a-status").className="statpill"+(st==="suspended"?" suspended":"");
+    $("a-stat2").textContent=a.status||"active";
+    $("a-conn").textContent=(a.conn_type==="ipoe"?"IPoE":(a.conn_type==="hotspot"?"Hotspot":"PPPoE"));
+    $("a-speed").textContent=(a.speed||"").trim()||"—";
+    $("a-rate").textContent=a.rate?peso(a.rate):"—";
+    PLAN_RATE=Number(a.rate||0);
+    $("a-due").textContent=a.due?String(a.due).slice(0,10):"—";
+    $("a-balance").textContent=peso(a.balance);
+    $("a-updated").textContent=a.updated_at?("Updated "+String(a.updated_at).slice(0,16)):"";
+    $("signin").style.display="none"; $("acct").style.display="block";
+  }
+  function signOut(){ ACC=null; $("acct").style.display="none"; $("signin").style.display="block"; $("code").value="";$("last").value="";$("msg").className="msg"; }
+
+  function openPay(purpose){
+    PAY_PURPOSE=purpose;
+    $("pay-title").textContent = purpose==="renew"?"Renew / pay plan":purpose==="bill"?"Pay bill":"Top up wallet";
+    const chips=$("amtchips");
+    let presets=[100,300,500,1000];
+    if((purpose==="renew"||purpose==="bill")&&PLAN_RATE>0) presets=[PLAN_RATE,PLAN_RATE*2,PLAN_RATE*3,500];
+    chips.innerHTML=presets.map(v=>`<button class="chip" onclick="pickAmt(${v},this)">${peso(v)}</button>`).join("");
+    if((purpose==="renew"||purpose==="bill")&&PLAN_RATE>0){ $("pay-amount").value=PLAN_RATE; }
+    else $("pay-amount").value="";
+    $("pay-msg").className="msg";
+    window.__formStart=Date.now();   // for anti-bot timing on manual submit
+    setMethod("online");             // default to online each open
+    $("paymodal").classList.add("show");
+  }
+  function closePay(){ $("paymodal").classList.remove("show"); }
+  let PAY_METHOD="online", SHOT_DATA="";
+  function setMethod(m){
+    PAY_METHOD=m;
+    $("m-online").classList.toggle("sel",m==="online");
+    $("m-manual").classList.toggle("sel",m==="manual");
+    $("pane-online").style.display = m==="online"?"block":"none";
+    $("pane-manual").style.display = m==="manual"?"block":"none";
+    // show your GCash/Maya pay details (separate cards + QR) for manual payers
+    if(m==="manual"){ renderPayDetails(); }
+  }
+  let PAY_PROVIDER="gcash";
+  function renderPayDetails(){
+    const c=window.__cfg||{};
+    const biz=c.biz_name||"JEFF NETWORK SERVICE";
+    const hasG=!!(c.gcash_number||c.gcash_name||c.gcash_qr);
+    const hasM=!!(c.maya_number||c.maya_name||c.maya_qr);
+    // default to whichever exists
+    if(PAY_PROVIDER==="gcash"&&!hasG&&hasM) PAY_PROVIDER="maya";
+    if(PAY_PROVIDER==="maya"&&!hasM&&hasG) PAY_PROVIDER="gcash";
+    let html="<div style='font-size:13px;color:var(--muted);margin-bottom:8px'>Send your payment to <b style='color:var(--ink)'>"+esc(biz)+"</b>, then enter your reference number below.</div>";
+    if(!hasG&&!hasM){ $("paydetails").innerHTML=html+"<div class='hint'>Use the GCash/Maya number we gave you.</div>"; return; }
+    // tabs (only show a tab if that provider has info)
+    html+="<div class='paytabs'>";
+    if(hasG) html+="<button type='button' class='paytab gcash"+(PAY_PROVIDER==="gcash"?" sel":"")+"' onclick=\"setProvider('gcash')\">📱 GCash</button>";
+    if(hasM) html+="<button type='button' class='paytab maya"+(PAY_PROVIDER==="maya"?" sel":"")+"' onclick=\"setProvider('maya')\">📱 Maya</button>";
+    html+="</div>";
+    // the selected provider card
+    const isG=PAY_PROVIDER==="gcash";
+    const num=isG?(c.gcash_number||""):(c.maya_number||"");
+    const nm=isG?(c.gcash_name||""):(c.maya_name||"");
+    const qr=isG?(c.gcash_qr||""):(c.maya_qr||"");
+    html+="<div class='paycard'>";
+    html+="<div class='pcname'>"+(isG?"GCash":"Maya")+" number</div>";
+    if(num){ html+="<div class='pcnum' id='pc-num'>"+esc(num)+"</div>"; }
+    else { html+="<div class='pcnum' id='pc-num'>"+esc(nm||"—")+"</div>"; }
+    if(nm) html+="<div class='pcacct'>"+esc(nm)+"</div>";
+    if(qr) html+="<img class='pcqr' src='"+esc(qr)+"' alt='"+(isG?"GCash":"Maya")+" QR'>";
+    if(num) html+="<button type='button' class='pccopy' onclick=\"copyNum()\">Copy number</button>";
+    html+="<div class='pchint'>"+(qr?"Scan the QR in your "+(isG?"GCash":"Maya")+" app, or send to the number above.":"Send to this number in your "+(isG?"GCash":"Maya")+" app.")+"</div>";
+    html+="</div>";
+    $("paydetails").innerHTML=html;
+  }
+  function setProvider(p){ PAY_PROVIDER=p; renderPayDetails(); }
+  function copyNum(){ const n=($("pc-num")||{}).textContent||""; if(navigator.clipboard){navigator.clipboard.writeText(n.replace(/\s/g,"")).then(()=>{const b=document.querySelector(".pccopy");if(b){const t=b.textContent;b.textContent="✓ Copied!";setTimeout(()=>b.textContent=t,1500);}});} }
+  function previewShot(){
+    const f=$("pay-shot").files[0]; if(!f){SHOT_DATA="";$("shot-preview").innerHTML="";return;}
+    $("shot-preview").innerHTML='<div style="font-size:13px;color:var(--muted);padding:8px 0">Processing photo…</div>';
+    const img=new Image(), rd=new FileReader();
+    rd.onload=()=>{ img.onload=()=>{
+      // downscale to max 800px wide, JPEG ~0.7 -> keeps it small for sync
+      const max=800, sc=Math.min(1,max/img.width), w=Math.round(img.width*sc), h=Math.round(img.height*sc);
+      const cv=document.createElement("canvas"); cv.width=w; cv.height=h;
+      cv.getContext("2d").drawImage(img,0,0,w,h);
+      SHOT_DATA=cv.toDataURL("image/jpeg",0.7);
+      // show a small confirmation chip (NOT the full image) so the Submit button stays visible
+      const kb=Math.round((SHOT_DATA.length*0.75)/1024);
+      $("shot-preview").innerHTML='<div style="display:flex;align-items:center;gap:8px;background:rgba(52,211,153,.12);border:1px solid var(--ok);color:#a7f3d0;border-radius:10px;padding:10px 12px;font-size:13px;font-weight:600">✓ Photo attached <span style="opacity:.7;font-weight:400">('+kb+' KB)</span> <button type="button" onclick="clearShot()" style="margin-left:auto;background:none;border:none;color:#a7f3d0;font-size:16px;cursor:pointer;width:auto;padding:0;box-shadow:none;margin:0">✕</button></div>';
+    }; img.onerror=()=>{ SHOT_DATA=""; $("shot-preview").innerHTML='<div style="font-size:13px;color:var(--bad);padding:8px 0">Could not read that image. Try another.</div>'; }; img.src=rd.result; };
+    rd.onerror=()=>{ SHOT_DATA=""; $("shot-preview").innerHTML='<div style="font-size:13px;color:var(--bad);padding:8px 0">Could not read that file.</div>'; };
+    rd.readAsDataURL(f);
+  }
+  function clearShot(){ SHOT_DATA=""; $("pay-shot").value=""; $("shot-preview").innerHTML=""; }
+  async function submitManual(){
+    const msg=$("pay-msg"); msg.className="msg";
+    const amount=Math.round(Number($("pay-amount").value||0));
+    const ref=$("pay-ref").value.trim();
+    if(!(amount>=20)){ msg.className="msg err"; msg.textContent="Enter the amount you paid (min \u20B120)."; return; }
+    if(!ref && !SHOT_DATA){ msg.className="msg err"; msg.textContent="Enter your reference number or upload a screenshot."; return; }
+    $("manual-go").disabled=true; $("manual-go").textContent="Sending...";
+    try{
+      const last=(ACC.name||"").trim().split(/\s+/).slice(-1)[0].toLowerCase();
+      const r=await fetch("/api/pay",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        name:ACC.code, contact:last, message:String(amount), pay_reference:ref, proof_img:SHOT_DATA, purpose:PAY_PURPOSE,
+        _t:Date.now()-(window.__formStart||Date.now()-9000)
+      })});
+      const d=await r.json();
+      if(d.ok){ msg.className="msg ok"; msg.textContent="Thank you! We'll confirm your payment and reconnect your service shortly."; SHOT_DATA=""; $("pay-ref").value=""; $("shot-preview").innerHTML=""; setTimeout(closePay,2500); }
+      else { msg.className="msg err"; msg.textContent=d.error||"Could not submit."; }
+    }catch(e){ msg.className="msg err"; msg.textContent="Network error. Please try again."; }
+    $("manual-go").disabled=false; $("manual-go").textContent="Submit for approval →";
+  }
+  function pickAmt(v,btn){ $("pay-amount").value=v; document.querySelectorAll("#amtchips .chip").forEach(c=>c.classList.remove("sel")); btn.classList.add("sel"); }
+  function clearChips(){ document.querySelectorAll("#amtchips .chip").forEach(c=>c.classList.remove("sel")); }
+
+  async function startPay(){
+    const msg=$("pay-msg"); msg.className="msg";
+    const amount=Math.round(Number($("pay-amount").value||0));
+    if(!(amount>=20)){ msg.className="msg err"; msg.textContent="Minimum payment is \u20B120."; return; }
+    $("pay-go").disabled=true; $("pay-go").textContent="Setting up...";
+    try{
+      const r=await fetch("/api/pay-start",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code:ACC.code,last:(ACC.name||"").trim().split(/\s+/).slice(-1)[0].toLowerCase(),amount,purpose:PAY_PURPOSE})});
+      const d=await r.json();
+      if(d.ok&&d.checkout_url){ window.location.href=d.checkout_url; }
+      else { msg.className="msg err"; msg.textContent=d.error||"Could not start payment."; }
+    }catch(e){ msg.className="msg err"; msg.textContent="Network error. Please try again."; }
+    $("pay-go").disabled=false; $("pay-go").textContent="Continue to payment →";
+  }
+
+  // load portal config (business / GCash / Maya names) for the manual-pay details
+  window.__cfg={};
+  fetch("/api/plans").then(r=>r.json()).then(d=>{ window.__cfg=d.config||{}; applyBranding(window.__cfg); }).catch(()=>{});
+
+  // if returned from a successful checkout, show a friendly note
+  if(new URLSearchParams(location.search).get("paid")==="1"){
+    setTimeout(()=>{ alert("Thank you! Your payment is being confirmed and your account will update shortly."); },300);
+  }
+
+  // Sync brand name, address and contact from system settings (no hardcoded business info).
+  function applyBranding(cfg){
+    cfg=cfg||{};
+    var nm=cfg.biz_name||"", ad=cfg.biz_address||"", ct=cfg.biz_contact||"";
+    if(nm){
+      var bn=document.getElementById("brand-name"); if(bn) bn.textContent=nm;
+      var fn=document.getElementById("foot-name"); if(fn) fn.textContent=(fn.textContent.indexOf("\u{1F4E1}")===0?"\u{1F4E1} ":"")+nm;
+      try{ if(document.title.indexOf("\u2014")>-1){} }catch(e){}
+    }
+    if(ad){ var fa=document.getElementById("foot-addr"); if(fa) fa.textContent=ad; }
+    var fc=document.getElementById("foot-contact");
+    if(fc){ fc.textContent = ct ? ("\u260E "+ct) : ""; }
+  }
+</script>
+</body>
+</html>
